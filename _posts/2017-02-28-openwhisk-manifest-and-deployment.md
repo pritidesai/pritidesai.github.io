@@ -1,4 +1,4 @@
-# Getting started with openwhisk wskdeploy
+# Getting started with Whisk Deploy
 
 When you are getting familiar with OpenWhisk by writing hello world action with *helloworld.js*
 

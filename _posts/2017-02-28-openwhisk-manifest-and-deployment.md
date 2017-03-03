@@ -89,7 +89,7 @@ Deployment completed successfully.
 ## Verify
 
 ```bash
-wsk action invoke --blocking --result helloworld
+wsk action invoke --blocking --result helloworld/helloworld
 {
     "payload": "Hello World!"
 }

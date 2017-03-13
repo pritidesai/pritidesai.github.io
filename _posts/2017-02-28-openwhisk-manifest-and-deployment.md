@@ -20,11 +20,8 @@ wskdeploy takes two files, (1) manifest file (2) deployment file.
 ```yaml
 package:
     name: helloworld
-    version: 1.0
-    license: Apache-2.0
     actions:
         helloworld:
-            version: 2.0
             location: src/helloworld.js
             runtime: nodejs
             outputs:
@@ -39,7 +36,6 @@ package:
 application:
     name: SampleHelloWorld
     namespace: _
-    version: 0.0.1
     package:
         name: helloworld
         actions:

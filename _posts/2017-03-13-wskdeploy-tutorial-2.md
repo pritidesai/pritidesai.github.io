@@ -1,4 +1,4 @@
-In [Getting Started with Whisk Deploy](https://medium.com/openwhisk/getting-started-with-whisk-deploy-cea744222585#.vv018i65l), we saw how to write manifest and deployment files to deploy [simple hello world action](https://github.com/openwhisk/openwhisk/blob/master/docs/actions.md#creating-and-invoking-javascript-actions). Lets look at how we can add parameters to an action and set defaults using deployment file.
+In [Getting Started with Whisk Deploy](https://medium.com/openwhisk/getting-started-with-whisk-deploy-cea744222585#.vv018i65l), we saw how to write manifest and deployment files to deploy [simple hello world action](https://github.com/openwhisk/openwhisk/blob/master/docs/actions.md#creating-and-invoking-javascript-actions). Lets look at how we can add parameters to the same action and set defaults using deployment file.
 
 ## Adding Parameters to Actions:
 

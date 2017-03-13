@@ -212,7 +212,7 @@ Activation: hellowroldWithLocationUpdate (c099355c1f1f4d6d8d30f54e8dac2b84)
 []
 ```
 
-#### Determine activation ID from polling and use that to get action result: 
+#### Determine activation ID from polling and get the result of that action: 
 
 ```bash
 wsk activation get d545c458f3d34d6fbf5c29173be3d29e

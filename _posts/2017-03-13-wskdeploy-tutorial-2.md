@@ -2,7 +2,7 @@ This story is a follow up on [Getting Started with Whisk Deploy](https://medium.
 
 * [Pass parameters to an action](https://github.com/openwhisk/openwhisk/blob/master/docs/actions.md#passing-parameters-to-an-action)
 * [Set defaults to those parameters using Whisk Deploy](https://github.com/openwhisk/openwhisk/blob/master/docs/actions.md#setting-default-parameters)
-* [Create/Deploy trigger](https://github.com/openwhisk/openwhisk/blob/master/docs/triggers_rules.md#creating-and-firing-triggers) 
+* [Create and Deploy trigger](https://github.com/openwhisk/openwhisk/blob/master/docs/triggers_rules.md#creating-and-firing-triggers) 
 * [Associate triggers and actions by using rule](https://github.com/openwhisk/openwhisk/blob/master/docs/triggers_rules.md#associating-triggers-and-actions-by-using-rules)
 
 ## Passing Parameters to Action:
@@ -25,14 +25,14 @@ package:
         helloworld:
             location: src/hello.js
             runtime: nodejs
-			inputs:
+	    inputs:
                 name:
                     type: string
                     description: name of a person
                 place:
                     type: string
                     description: location of a person
-			outputs:
+	    outputs:
                 payload:
                     type: string
                     description: a simple greeting message, Hello World!

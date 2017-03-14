@@ -1,14 +1,20 @@
-In [Getting Started with Whisk Deploy](https://medium.com/openwhisk/getting-started-with-whisk-deploy-cea744222585#.vv018i65l), we saw how to write manifest and deployment files to deploy [simple hello world action](https://github.com/openwhisk/openwhisk/blob/master/docs/actions.md#creating-and-invoking-javascript-actions). Lets look at how we can add parameters to the same action, set defaults using deployment file, define trigger and rule.
+This story is a follow up on [Getting Started with Whisk Deploy](https://medium.com/openwhisk/getting-started-with-whisk-deploy-cea744222585#.vv018i65l) where we learnt how to automate deployment of [simple hello world action](https://github.com/openwhisk/openwhisk/blob/master/docs/actions.md#creating-and-invoking-javascript-actions). Lets look at how we can:
 
-## Adding Parameters to Actions:
+* [Pass parameters to an action](https://github.com/openwhisk/openwhisk/blob/master/docs/actions.md#passing-parameters-to-an-action)
+* [Set defaults to those parameters using Whisk Deploy](https://github.com/openwhisk/openwhisk/blob/master/docs/actions.md#setting-default-parameters)
+* [Create/Deploy trigger](https://github.com/openwhisk/openwhisk/blob/master/docs/triggers_rules.md#creating-and-firing-triggers) 
+* [Associate triggers and actions by using rule](https://github.com/openwhisk/openwhisk/blob/master/docs/triggers_rules.md#associating-triggers-and-actions-by-using-rules)
+
+## Passing Parameters to Action:
 
 ```bash
+cat hello.js
 function main(params) {	
   return {payload:  'Hello, ' + params.name + ' from ' + params.place};
 }
 ```
 
-### manifest.yaml
+### Step 1: Create a manifest file (manifest.yaml)
 
 Define parameters by adding **inputs** section under action name **"helloworld"**:
 
@@ -17,7 +23,7 @@ package:
     name: helloworld
     actions:
         helloworld:
-            location: src/helloworld.js
+            location: src/hello.js
             runtime: nodejs
 			inputs:
                 name:
@@ -32,7 +38,7 @@ package:
                     description: a simple greeting message, Hello World!
 ```
 
-### deployment.yaml
+### Step 2: Create a deployment file (deployment.yaml)
 
 Set default parameters by adding **inputs** section under action name **"helloworld"**:
 
@@ -49,7 +55,7 @@ application:
                     place: Paris
 ```
 
-### Same directory structure as before
+### Step 3: Same directory structure
 
 ```bash
 ls -1R ~/SampleHelloWorldApp/
@@ -58,10 +64,10 @@ manifest.yaml
 src/
 
 ./src:
-helloworld.js
+hello.js
 ```
 
-### Deploy Hello World
+### Step 4: Deploy Hello World Action
 
 ```bash
 ./wskdeploy -p ~/SampleHelloWorldApp/
@@ -91,7 +97,7 @@ Deploying action helloworld/helloworld ... Done!
 Deployment completed successfully.
 ```
 
-### Verify
+### Step 5: Verify your deployment
 
 ```bash
 wsk action invoke --blocking --result helloworld/helloworld
@@ -109,9 +115,9 @@ wsk action invoke --blocking --result helloworld/helloworld --param name Mark --
 
 ## Create Trigger and Rule
 
-### manifest.yaml
+### Step 1: Update the manifest file (manifest.yaml)
 
-Add a section called "triggers" and "rules" 
+Add a section named "triggers" and "rules": 
 
 ```
 package:
@@ -139,7 +145,7 @@ package:
             trigger: locationUpdate
 ```
 
-### Deploy Hello World action, trigger, and rule:
+### Step 2: Deploy Hello World action, trigger, and rule:
 
 ```bash
 ./wskdeploy -p ~/SampleHelloWorldApp/
@@ -176,9 +182,9 @@ Deploying rule hellowroldWithLocationUpdate ... Done!
 Deployment completed successfully.
 ```
 
-### Verify
+### Step 3: Verify your deployment
 
-#### Poll for running actions:
+#### (1) Poll for running actions:
 
 ```bash
 wsk activation poll
@@ -186,7 +192,7 @@ Enter Ctrl-c to exit.
 Polling for activation logs
 ```
 
-#### Fire trigger:
+#### (2) Fire trigger:
 
 Open one more terminal and fire the trigger:
 
@@ -195,7 +201,7 @@ wsk trigger fire locationUpdate
 ok: triggered /pdesai@us.ibm.com_dev/locationUpdate with id 4c3a8b1792d546a68ac58538c3f5d637
 ```
 
-#### Result from polling:
+#### (3) Result from polling:
 
 ```bash
 wsk activation poll
@@ -212,7 +218,7 @@ Activation: hellowroldWithLocationUpdate (c099355c1f1f4d6d8d30f54e8dac2b84)
 []
 ```
 
-#### Determine activation ID from polling and get the result of that action: 
+#### (4) Determine activation ID from polling and get the result of that action: 
 
 ```bash
 wsk activation get d545c458f3d34d6fbf5c29173be3d29e
@@ -233,4 +239,3 @@ ok: got activation d545c458f3d34d6fbf5c29173be3d29e
 	...
 }
 ```
-

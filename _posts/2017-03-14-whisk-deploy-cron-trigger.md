@@ -91,3 +91,63 @@ Deploying rule helloworldEvery12Hours ... Done!
 Deployment completed successfully.
 ```
 
+# verify
+
+
+### Poll for running actions:
+
+```
+wsk activation poll
+Enter Ctrl-c to exit.
+Polling for activation logs
+```
+
+### Fire the trigger:
+
+Open one more terminal and fire the trigger:
+
+```
+wsk trigger fire Every12Hours
+ok: triggered Every12Hours with id 4fdd1ad24b7a4b349b7356f8c83ac459
+```
+
+### Result from polling:
+
+```
+wsk activation poll
+Enter Ctrl-c to exit.
+Polling for activation logs
+
+Activation: helloworld (e9bdbf191f704660acf5e2678b3d11e2)
+[]
+
+Activation: helloworldEvery12Hours (d725186ae54c4ac89530af73b4c4f966)
+[]
+
+Activation: Every12Hours (4fdd1ad24b7a4b349b7356f8c83ac459)
+[]
+```
+
+### Determine activation ID from polling and get the result of that action:
+
+```
+wsk activation get e9bdbf191f704660acf5e2678b3d11e2
+ok: got activation e9bdbf191f704660acf5e2678b3d11e2
+{
+    "name": "helloworld",
+    "version": "0.0.1",
+    "publish": false,
+    "activationId": "e9bdbf191f704660acf5e2678b3d11e2",
+    "start": 1489595135396,
+    "end": 1489595135399,
+    "response": {
+        "status": "success",
+        "statusCode": 0,
+        "success": true,
+        "result": {
+            "payload": "Hello, Amy from Paris"
+        }
+    },
+}
+```
+

@@ -1,3 +1,5 @@
+# Whisk Deploy - Action, Trigger, and Rule
+
 This story is a follow up on [Getting Started with Whisk Deploy](https://medium.com/openwhisk/getting-started-with-whisk-deploy-cea744222585#.vv018i65l) where we learnt how to automate deployment of [simple hello world action](https://github.com/openwhisk/openwhisk/blob/master/docs/actions.md#creating-and-invoking-javascript-actions). Lets look at how we can:
 
 * [Pass parameters to an action](https://github.com/openwhisk/openwhisk/blob/master/docs/actions.md#passing-parameters-to-an-action)

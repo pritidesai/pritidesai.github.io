@@ -1,13 +1,17 @@
-Cron Feed Trigger
+# Whisk Deploy — Alarm Trigger
 
-# manifest.yaml
+OpenWhisk actions can  be triggered periodically by an alarm trigger (similar to cron job). Lets look at how can we deploy alarm trigger using wskdeploy:
+
+## Step 1: Create a manifest file (manifest.yaml)
+
+To define an alarm trigger, we have to specify source of the trigger as /whisk.system/alarms/alarm in manifest.yaml file:
+package:
 
 ```yaml
-package:
     name: helloworld
     actions:
         helloworld:
-            location: src/helloworld.js
+            location: src/hello.js
             runtime: nodejs:6
             inputs:
                 name:
@@ -21,15 +25,18 @@ package:
                     type: string
                     description: a simple greeting message, Hello World!
     triggers:
-        cron-trigger:
+        Every12Hours:
             source: /whisk.system/alarms/alarm
     rules:
         hellowroldOnCron:
             action: helloworld
-            trigger: cron-trigger
+            trigger: Every12Hours
+
 ```
 
-# deployment.yaml
+## Step 2: Create a deployment file (deployment.yaml)
+
+Set cron as an input to alarm trigger Every12Hours: 
 
 ```yaml
 application:
@@ -43,16 +50,35 @@ application:
                     name: Amy
                     place: Paris
         triggers:
-            cron-trigger:
+            Every12Hours:
                 inputs:
                     cron: "0 */12 * * *"
 ```
 
-# deployment 
+You can also set trigger payload (action parameter values during each trigger) in deployment file using trigger_payload:
+application:
 
+```yaml
+    name: SampleHelloWorld
+    namespace: _
+    package:
+        name: helloworld
+        actions:
+            helloworld:
+                inputs:
+                    name: Amy
+                    place: Paris
+        triggers:
+            Every12Hours:
+                inputs:
+                    cron: "0 */12 * * * *"
+                    trigger_payload: "{\"name\":\"Mark\", \"place\":\"Barcelona\"}"
 ```
- ~/IBM/GoWorkspace/src/github.com/openwhisk/openwhisk-wskdeploy/wskdeploy
-2017/03/15 09:20:49 trigger feed source:/whisk.system/alarms/alarm
+
+## Step 3: Deploy a sample action
+
+```bash
+./wskdeploy -p ~/SampleHelloWorldApp/
          ____      ___                   _    _ _     _     _
         /\   \    / _ \ _ __   ___ _ __ | |  | | |__ (_)___| | __
    /\  /__\   \  | | | | '_ \ / _ \ '_ \| |  | | '_ \| / __| |/ /
@@ -72,7 +98,7 @@ Name: helloworld
 Triggers:
 * trigger: Every12Hours
     bindings:
-        - name: cron value: 0 */12 * * *
+        - name: cron value: 0 */12 * * * *
     annotations:
         - name: feed value: /whisk.system/alarms/alarm
 
@@ -91,63 +117,6 @@ Deploying rule helloworldEvery12Hours ... Done!
 Deployment completed successfully.
 ```
 
-# verify
+At this point, we have an action hello world configured to run every 12 hours. We can verify our deployment by firing a trigger and checking if action is invoked by following instructions from Whisk Deploy — Action, Trigger, and Rule.
 
-
-### Poll for running actions:
-
-```
-wsk activation poll
-Enter Ctrl-c to exit.
-Polling for activation logs
-```
-
-### Fire the trigger:
-
-Open one more terminal and fire the trigger:
-
-```
-wsk trigger fire Every12Hours
-ok: triggered Every12Hours with id 4fdd1ad24b7a4b349b7356f8c83ac459
-```
-
-### Result from polling:
-
-```
-wsk activation poll
-Enter Ctrl-c to exit.
-Polling for activation logs
-
-Activation: helloworld (e9bdbf191f704660acf5e2678b3d11e2)
-[]
-
-Activation: helloworldEvery12Hours (d725186ae54c4ac89530af73b4c4f966)
-[]
-
-Activation: Every12Hours (4fdd1ad24b7a4b349b7356f8c83ac459)
-[]
-```
-
-### Determine activation ID from polling and get the result of that action:
-
-```
-wsk activation get e9bdbf191f704660acf5e2678b3d11e2
-ok: got activation e9bdbf191f704660acf5e2678b3d11e2
-{
-    "name": "helloworld",
-    "version": "0.0.1",
-    "publish": false,
-    "activationId": "e9bdbf191f704660acf5e2678b3d11e2",
-    "start": 1489595135396,
-    "end": 1489595135399,
-    "response": {
-        "status": "success",
-        "statusCode": 0,
-        "success": true,
-        "result": {
-            "payload": "Hello, Amy from Paris"
-        }
-    },
-}
-```
-
+Enjoy!

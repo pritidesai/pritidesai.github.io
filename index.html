@@ -18,7 +18,7 @@ layout: default
         <p class="post-index-title"><a href="{{site.baseurl}}{{post.url}}">{{post.title}}</a></p>
         <p>
             
-                <span class="excerpt">{{ post.content | strip_html | strip_newlines | truncate: 190 }}</span>
+                <span class="excerpt">{{ post.content | strip_html | strip_newlines | truncate: 90 }}</span>
             
         </p>
         <p class="post-detail">{{ post.date | date: '%B %d, %Y' }}

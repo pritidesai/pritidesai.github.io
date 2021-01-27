@@ -27,3 +27,5 @@ exclude:
 
 include: 
 - _pages
+
+theme: jekyll-theme-architect

@@ -28,4 +28,4 @@ exclude:
 include: 
 - _pages
 
-theme: jekyll-theme-architect
+theme: jekyll-theme-slate
